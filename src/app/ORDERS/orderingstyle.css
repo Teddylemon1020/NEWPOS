@@ -1,0 +1,107 @@
+.header {
+  background-color: #ff4d4d;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+.menu-toggle {
+  background-color: #f8f9fa;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* General styles for the menu container */
+.menu-container {
+  display: grid; /* Use grid layout */
+  grid-template-columns: repeat(3, 1fr); /* Three columns */
+  gap: 15px; /* Space between grid items */
+  padding: 20px; /* Padding around the grid */
+}
+
+/* Style for each menu item */
+.menu-item {
+  border: 1px solid #ccc; /* Add border for visual separation */
+  border-radius: 8px; /* Rounded corners */
+  overflow: hidden; /* Ensure content does not overflow */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow effect */
+  text-align: center; /* Center text and button */
+  background-color: #fff; /* White background */
+  transition: transform 0.3s; /* Smooth hover effect */
+}
+
+/* Menu item hover effect */
+.menu-item:hover {
+  transform: translateY(-5px); /* Lift effect on hover */
+}
+
+/* Image styles */
+.image-placeholder img {
+  width: 100%; /* Full width */
+  height: 100px; /* Set a smaller fixed height */
+  object-fit: cover; /* Cover to maintain aspect ratio */
+}
+
+/* Add to cart button styles */
+.add-to-cart {
+  background-color: #28a745; /* Green background */
+  color: white; /* White text */
+  border: none; /* No border */
+  border-radius: 4px; /* Rounded corners */
+  padding: 8px 10px; /* Adjusted padding for smaller button */
+  cursor: pointer; /* Pointer cursor */
+  transition: background-color 0.3s; /* Smooth transition */
+}
+
+.add-to-cart:hover {
+  background-color: #218838; /* Darker green on hover */
+}
+
+.cart {
+  position: fixed;
+  right: 0;
+  top: 0;
+  background-color: white;
+  width: 250px;
+  border-left: 1px solid #ddd;
+  padding: 20px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.cart h2 {
+  color: #ff4d4d;
+}
+
+.cart p {
+  font-size: 1.2em;
+}
+
+/* Style for submit button */
+.submit-btn {
+  background-color: #ff4d4d; /* Matching the header color */
+  color: white; /* White text */
+  border: none; /* No border */
+  border-radius: 4px; /* Rounded corners */
+  padding: 10px 20px; /* Padding for button */
+  cursor: pointer; /* Pointer cursor on hover */
+  font-size: 1em; /* Adjust font size */
+  width: 100%; /* Full width */
+  margin-top: 20px; /* Space above the button */
+  transition: background-color 0.3s ease; /* Smooth hover transition */
+}
+
+.submit-btn:hover {
+  background-color: #cc3d3d; /* Slightly darker red on hover */
+}
+
+.menu-wrapper {
+  width: 80%; /* You can adjust the width as needed */
+  max-width: 1200px;
+  margin: 0; /* Removes automatic centering */
+  padding: 10px; /* Adjust padding as needed */
+  position: relative; /* Default positioning */
+  left: 0; /* Ensures it stays aligned left */
+}

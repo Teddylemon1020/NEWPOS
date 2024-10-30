@@ -1,0 +1,52 @@
+/* EmployeeForm.css */
+
+.container {
+  max-width: 60%;
+  padding: 2rem;
+  margin-top: 2.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+  background-color: white;
+  border: 1px solid #e5e7eb;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 3rem;
+}
+
+.input-field {
+  border: 1px solid #d1d5db;
+  padding: 0.5rem;
+  width: 100%;
+  border-radius: 0.25rem;
+}
+
+.section {
+  margin-top: 2rem;
+  border-top: 1px solid #d1d5db;
+  padding-top: 2rem;
+}
+
+.download-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.download-btn:hover {
+  background-color: #0056b3;
+}

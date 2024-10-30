@@ -1,0 +1,56 @@
+
+/* Style for the logo container */
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 200px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    margin-top: -600px; /* Adjust to move logo up */
+}
+
+/* Style for the logo */
+.logo {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+/* Style for the quote text */
+.quote-text {
+    margin-top: 10px; /* Adds space between the logo and the text */
+    font-family: 'Georgia', serif; /* Example font */
+    font-size: 18px;  /* Adjust font size */
+    color: #333;  /* Text color */
+    text-align: center;
+    font-style: italic; /* Makes the text italic */
+}
+    /* Button container style */
+    .button-container {
+        margin-top: 100px; /* Adds space between quote and buttons */
+        display: flex;
+        gap: 50px; /* Adds space between each button */
+        flex-wrap: wrap; /* Allows buttons to wrap on smaller screens */
+        justify-content: center; /* Center buttons horizontally */
+    }
+
+    /* Button style */
+    .nav-button {
+        background-color: #4CAF50; /* Green background */
+        color: white; /* White text */
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease; /* Smooth hover effect */
+    }
+
+    /* Hover effect for buttons */
+    .nav-button:hover {
+        background-color: #45a049; /* Darker green on hover */
+    }
