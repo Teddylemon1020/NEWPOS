@@ -15,6 +15,7 @@ import SISIGSILOG from "./menu/RIBSILOG.jpg";
 import SPAMSILOG from "./menu/SPAMSILOG.jpg";
 import TAPSILOG from "./menu/TAPSILOG.jpg";
 import TOCILOG from "./menu/TOCILOG.jpeg";
+import { API_URL } from "../App.jsx";
 
 const FoodMenu = () => {
   const [cart, setCart] = useState([]);
@@ -63,21 +64,18 @@ const FoodMenu = () => {
     setOrderNumber(generatedOrderNumber);
 
     try {
-      const response = await fetch(
-        "http://localhost:3001/api/user/order/create",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            orderDetails: cart,
-            totalOrderPrice: total,
-            orderNumber: generatedOrderNumber,
-            userEmail: "test@gmail.com",
-          }),
-        }
-      );
+      const response = await fetch(`${API_URL}/api/user/order/create`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          orderDetails: cart,
+          totalOrderPrice: total,
+          orderNumber: generatedOrderNumber,
+          userEmail: "test@gmail.com",
+        }),
+      });
       navigate(`/receipt?order=${generatedOrderNumber}`);
     } catch (error) {
       return console.log(error);
