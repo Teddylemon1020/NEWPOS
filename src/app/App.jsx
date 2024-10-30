@@ -10,7 +10,7 @@ import Receipt from "./RECEIPT/Receipt.jsx";
 import Payroll from "./PAYROLL/Payroll.jsx";
 import Signup from "./LOGIN/Signup.jsx";
 
-export const API_URL = "http://localhost:3001";
+export const API_URL = "https://newposbe.onrender.com";
 
 const App = () => {
   return (
