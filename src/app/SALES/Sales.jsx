@@ -1,160 +1,163 @@
-import React, { useEffect } from 'react';
-import Chart from 'chart.js/auto'; // Import Chart.js
-import '../style.css';
+import React, { useEffect, useState } from "react";
+import Chart from "chart.js/auto"; // Import Chart.js
+import "../style.css";
+import { API_URL } from "../App.jsx";
 
 const FoodSalesGraph = () => {
+  const [salesOrderData, setSalesOrderData] = useState({
+    ADOSILOG: 0,
+    BANGSILOG: 0,
+    CHICKSILOG: 0,
+    CORNSILOG: 0,
+    DANGSILOG: 0,
+    HOTSILOG: 0,
+    LIEMPOSILOG: 0,
+    LONGSILOG: 0,
+    RIBSILOG: 0,
+    SISIGSILOG: 0,
+    SPAMSILOG: 0,
+    TAPSILOG: 0,
+    TOCILOG: 0,
+  });
+  const [error, setError] = useState("");
+
+  const fetchSalesData = async () => {
+    try {
+      const response = await fetch(`${API_URL}/api/user/sales/get`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log(data.order);
+        const newSalesData = { ...salesOrderData };
+        data.order.forEach((name) => {
+          if (newSalesData[name] !== undefined) {
+            newSalesData[name] += 1;
+          }
+        });
+        setSalesOrderData(newSalesData);
+      } else {
+        setError(data.message || "Failed to fetch sales data");
+        console.log(data.message);
+      }
+    } catch (error) {
+      setError("Server error, please try again later.");
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchSalesData();
+  }, []);
+
   useEffect(() => {
     // Sales by Food Category Data
+
     const salesData = {
       labels: [
-        'ADOSILOG', 'BANGSILOG', 'CHICKSILOG', 'CORNSILOG', 'DANGSILOG', 'HOTSILOG', 
-        'LIEMPOSILOG', 'LONGSILOG', 'RIBSILOG', 'SISIGSILOG', 'SPAMSILOG', 'TAPSILOG', 'TOCILOG'
+        "ADOSILOG",
+        "BANGSILOG",
+        "CHICKSILOG",
+        "CORNSILOG",
+        "DANGSILOG",
+        "HOTSILOG",
+        "LIEMPOSILOG",
+        "LONGSILOG",
+        "RIBSILOG",
+        "SISIGSILOG",
+        "SPAMSILOG",
+        "TAPSILOG",
+        "TOCILOG",
       ],
-      datasets: [{
-        label: 'Sales (in units)',
-        data: [15, 10, 12, 8, 9, 11, 13, 7, 10, 14, 8, 13, 12],
-        backgroundColor: [
-          '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40', 
-          '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40', '#FF6384'
-        ],
-        borderColor: 'rgba(75, 192, 192, 1)',
-        borderWidth: 2,
-      }]
-    };
-
-    // Orders Over Time Data
-    const ordersData = {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-      datasets: [{
-        label: 'Total Orders',
-        data: [150, 200, 180, 220, 170, 250, 190, 230, 210, 220, 240, 260],
-        backgroundColor: '#36A2EB',
-        borderColor: '#36A2EB',
-        borderWidth: 2,
-        fill: true,
-        tension: 0.3  // Smooth line
-      }]
-    };
-
-    // Peak Order Time Data
-    const orderTimeData = {
-      labels: ['8 AM', '10 AM', '12 PM', '2 PM', '4 PM', '6 PM', '8 PM'],
-      datasets: [{
-        label: 'Orders Frequency',
-        data: [10, 20, 30, 15, 40, 25, 35],
-        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40', '#FF6384'],
-        borderColor: 'rgba(153, 102, 255, 1)',
-        borderWidth: 2
-      }]
+      datasets: [
+        {
+          label: "Sales (in units)",
+          data: [
+            salesOrderData.ADOSILOG,
+            salesOrderData.BANGSILOG,
+            salesOrderData.CHICKSILOG,
+            salesOrderData.CORNSILOG,
+            salesOrderData.DANGSILOG,
+            salesOrderData.HOTSILOG,
+            salesOrderData.LIEMPOSILOG,
+            salesOrderData.LONGSILOG,
+            salesOrderData.RIBSILOG,
+            salesOrderData.SISIGSILOG,
+            salesOrderData.SPAMSILOG,
+            salesOrderData.TAPSILOG,
+            salesOrderData.TOCILOG,
+          ],
+          backgroundColor: [
+            "#FF6384",
+            "#36A2EB",
+            "#FFCE56",
+            "#4BC0C0",
+            "#9966FF",
+            "#FF9F40",
+            "#FF6384",
+            "#36A2EB",
+            "#FFCE56",
+            "#4BC0C0",
+            "#9966FF",
+            "#FF9F40",
+            "#FF6384",
+          ],
+          borderColor: "rgba(75, 192, 192, 1)",
+          borderWidth: 2,
+        },
+      ],
     };
 
     // Configurations for Sales by Food Category (Bar Chart)
     const salesConfig = {
-      type: 'bar',
+      type: "bar",
       data: salesData,
       options: {
         scales: {
           y: {
-            beginAtZero: true
-          }
+            beginAtZero: true,
+          },
         },
         responsive: true,
         plugins: {
           legend: {
-            position: 'top',
+            position: "top",
             labels: {
-              color: '#4B5563'
-            }
-          }
-        }
-      }
-    };
-
-    // Configurations for Total Orders Over Time (Line Chart)
-    const ordersConfig = {
-      type: 'line',
-      data: ordersData,
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true
-          }
+              color: "#4B5563",
+            },
+          },
         },
-        responsive: true,
-        plugins: {
-          legend: {
-            position: 'top',
-            labels: {
-              color: '#4B5563'
-            }
-          }
-        }
-      }
-    };
-
-    // Configurations for Peak Order Time (Pie Chart)
-    const orderTimeConfig = {
-      type: 'pie',
-      data: orderTimeData,
-      options: {
-        responsive: true,
-        plugins: {
-          legend: {
-            position: 'top',
-            labels: {
-              color: '#4B5563'
-            }
-          }
-        }
-      }
+      },
     };
 
     // Rendering the charts when the component mounts
     const salesChart = new Chart(
-      document.getElementById('salesChart'),
+      document.getElementById("salesChart"),
       salesConfig
-    );
-
-    const ordersChart = new Chart(
-      document.getElementById('ordersChart'),
-      ordersConfig
-    );
-
-    const orderTimeChart = new Chart(
-      document.getElementById('orderTimeChart'),
-      orderTimeConfig
     );
 
     // Cleanup function to destroy charts when the component unmounts
     return () => {
       salesChart.destroy();
-      ordersChart.destroy();
-      orderTimeChart.destroy();
     };
-  }, []);
+  }, [salesOrderData]);
 
   return (
     <div className="container mx-auto px-4 py-8 bg-gray-100 flex flex-col items-center justify-center min-h-screen space-y-12">
       {/* Page title */}
-      <h1 className="text-4xl font-bold text-gray-800 mb-8">Food Category Sales</h1>
+      <h1 className="text-4xl font-bold text-gray-800 mb-8">
+        Food Category Sales
+      </h1>
 
       {/* Container for the charts */}
       <div className="charts-container grid grid-cols-1 gap-8 w-full max-w-5xl">
         {/* Sales by Food Category Graph */}
         <div className="bg-white shadow-lg rounded-lg p-6">
           <canvas id="salesChart" className="w-full"></canvas>
-        </div>
-
-        {/* Total Orders Over Time Graph */}
-        <div className="bg-white shadow-lg rounded-lg p-6">
-          <h2 className="text-2xl font-semibold text-gray-700 mb-4">Total Orders Over Time</h2>
-          <canvas id="ordersChart" className="w-full"></canvas>
-        </div>
-
-        {/* Peak Order Time Frequency Graph */}
-        <div className="bg-white shadow-lg rounded-lg p-6">
-          <h2 className="text-2xl font-semibold text-gray-700 mb-4">Peak Order Time</h2>
-          <canvas id="orderTimeChart" className="w-full"></canvas>
         </div>
       </div>
     </div>

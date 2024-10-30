@@ -3,56 +3,39 @@ import React, { useState } from "react";
 import "./signupDesign.css"; // Ensure this file is in the src directory or adjust the path
 import Signup from "./signup.jpg"; // Importing the image
 import { useNavigate } from "react-router-dom"; // Importing useNavigate hook
+import { API_URL } from "../App.jsx";
 
 const Login = () => {
-  const [username, setUsername] = useState(""); // Storing username input
+  const [email, setEmail] = useState(""); // Storing username input
   const [password, setPassword] = useState(""); // Storing password input
   const [loginError, setLoginError] = useState(""); // Storing login error message
-  const adminAccount = { username: "admin", password: "password" };
 
   const navigate = useNavigate(); // Declare navigate using the useNavigate hook
 
-  // Array to store registered user accounts (replace with backend storage in production)
-  const userAccounts = [];
-
-  const handleLogin = (username, password) => {
-    // Check if the user is the predefined admin
-    if (
-      username === adminAccount.username &&
-      password === adminAccount.password
-    ) {
-      navigate("/Home"); // Redirect admin to the admin page
-    } else {
-      // Check if the user exists in registered users
-      const registeredUser = userAccounts.find(
-        (user) => user.username === username && user.password === password
-      );
-
-      if (registeredUser) {
-        navigate("/Orders"); // Redirect users to Orders page
-      } else {
-        setLoginError("Invalid username or password"); // Show error for invalid credentials
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(`${API_URL}/api/user/log-in`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        setLoginError(data.message);
+        return;
       }
-    }
-  };
-  const handleSignup = (username, password) => {
-    // Check if username is already taken
-    const userExists = userAccounts.find((user) => user.username === username);
-    if (userExists) {
-      setSignupError("Username is already taken");
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("email", data.email);
+      navigate("/home");
+      return;
+    } catch (error) {
+      setLoginError(error);
+      console.log(error);
       return;
     }
-
-    // Add new user to the list and navigate to Orders
-    userAccounts.push({ username, password, role: "user" });
-    navigate("/Orders"); // Redirect new users directly to Orders page
-  };
-  const handleSignupClick = () => {
-    navigate("/signup"); // Navigate to the Signup page
-  };
-  const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent default form submission
-    handleLogin(username, password);
   };
 
   return (
@@ -69,13 +52,13 @@ const Login = () => {
     >
       <div className="login-container" id="login-container">
         <h1>Login</h1>
-        <form id="login-form" onSubmit={handleSubmit}>
+        <form id="login-form" onSubmit={handleLogin}>
           <input
-            type="text"
-            id="username"
-            placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)} // Handle username input change
+            type="email"
+            id="email"
+            placeholder="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
           <input
@@ -91,7 +74,7 @@ const Login = () => {
           {/* Display login error if invalid */}
         </form>
         {/* Sign Up Button */}
-        <button onClick={handleSignupClick} className="signup-button">
+        <button onClick={() => navigate("/Signup")} className="signup-button">
           Sign Up
         </button>
       </div>
